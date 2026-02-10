@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfraX-Ray Intelligence Report - {{TARGET}}</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.05em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .meta {
+            text-align: right;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Score Card */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        .card .value {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0.5rem 0 0 0;
+            line-height: 1;
+        }
+
+        .card .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* Risk Colors */
+        .risk-critical {
+            color: var(--danger);
+        }
+
+        .risk-high {
+            color: #f97316;
+        }
+
+        .risk-medium {
+            color: var(--warning);
+        }
+
+        .risk-low {
+            color: var(--success);
+        }
+
+        /* Tables */
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 3rem 0 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 1.25rem;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #1e293b;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Infra<span>X-Ray</span></div>
+            <div class="meta">
+                <div>Target: <strong>{{TARGET}}</strong></div>
+                <div>Date: {{DATE}}</div>
+            </div>
+        </header>
+
+        <!-- Executive Dashboard -->
+        <h2 class="section-title">Executive Summary</h2>
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>Overall Risk Score</h3>
+                <div class="value {{RISK_CLASS}}">{{RISK_SCORE}}</div>
+                <div class="subtitle">Out of 100</div>
+            </div>
+            <div class="card">
+                <h3>Total Assets</h3>
+                <div class="value">{{TOTAL_ASSETS}}</div>
+                <div class="subtitle">Scanned & Validated</div>
+            </div>
+            <div class="card">
+                <h3>Total Vulnerabilities</h3>
+                <div class="value risk-high">{{TOTAL_VULNS}}</div>
+                <div class="subtitle">Actionable Findings</div>
+            </div>
+        </div>
+
+        <!-- Priority Assets -->
+        <h2 class="section-title">Top Priority Assets</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+            The following assets represent the highest risk to the organization based on exposure, vulnerability
+            severity, and context.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Asset Name</th>
+                    <th>IP Address</th>
+                    <th>Risk Level</th>
+                    <th>Score</th>
+                    <th>Evidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ASSETS_TABLE_ROWS}}
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>Generated by <strong>InfraX-Ray Intelligence Engine</strong> v2.0</p>
+            <p>Made by <strong>NullC0d3</strong></p>
+            <p>&copy; 2026 NullC0d3. All rights reserved.</p>
+            <p>CONFIDENTIAL - FOR AUTHORIZED USE ONLY</p>
+        </div>
+    </div>
+</body>
+
+</html>
