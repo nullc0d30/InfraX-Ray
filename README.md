@@ -96,7 +96,7 @@ InfraX-Ray is designed for Linux environments (Debian/Ubuntu preferred).
 
 ```bash
 # Clone the repository
-git clone https://github.com/organization/infraxray.git
+git clone https://github.com/nullc0d30/InfraX-Ray.git
 
 # Enter directory
 cd infraxray
