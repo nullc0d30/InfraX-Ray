@@ -99,7 +99,7 @@ InfraX-Ray is designed for Linux environments (Debian/Ubuntu preferred).
 git clone https://github.com/nullc0d30/InfraX-Ray.git
 
 # Enter directory
-cd infraxray
+cd InfraX-Ray
 
 # Run the installer (Sudo required for dependency management)
 sudo ./install.sh
